@@ -1,4 +1,6 @@
 # A PurpleAir Dashboard For MagTag
+![MagTag Display](/IMG_2638.jpeg)
+
 PurpleAir air quality sensors are great but their readings aren't as accessible as they could be. The MagTag is a battery powered E-Ink display with magnetic feet that sticks to your fridge and talks to purpleair.com over WiFI so it can display your sensor's current air quality reading.
 
 This code shows the current AQI, the name of the sensor, a low battery warning as well as the date stamp of the sensor reading. The E-Ink display will remain readable even after the battery dies so if the time stamp is ever more than 15 minutes old then either the sensor or the MagTag stopped updating.
