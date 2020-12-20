@@ -171,28 +171,22 @@ else:
     voltage_text.text = 'Battery Low'
 print(f'battery: {magtag.peripherals.battery} V')
 
-magtag.network.connect()
+try:
+    magtag.network.connect()
+    response = magtag.network.requests.get(data_source)
+    value = response.json()
+    results = value['results'][0]
+except (ConnectionError, ValueError, RuntimeError) as e:
+    print("Some error occured, retrying in 10 seconds -", e)
+    magtag.exit_and_deep_sleep(10)
 
-needs_update = True
-while needs_update:
-    try:
-        response = magtag.network.requests.get(data_source)
-        value = response.json()
-        results = value['results'][0]
-        needs_update = False
-    except (ValueError, RuntimeError) as e:
-        print("Some error occured, retrying! -", e)
-        # wait to retry to avoid hammering server
-        time.sleep(60)
-
-# Default time zone is Pacific Standard. Set your
-# time zone by adding 'timezone_offset' to secrets
-# file. Do this by hand because the alternative uses
-# more energy and is harder for newbies.
-if 'timezone_offset' in secrets:
-    timezone_offset = secrets['timezone_offset']
-
-else:
+# Default time zone is Pacific Standard
+timezone_offset = secrets['timezone_offset']
+valid_offsets = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+                 "10", "11", "12", "-1", "-2", "-3", "-4", "-5",
+                 "-6", "-7", "-8", "-9", "-10", "-11", "-12"]
+if (timezone_offset not in valid_offsets):
+    print("timezone_offset must be one of the following values", valid_offsets)
     timezone_offset = -8  # Pacific Standard Time
 last_seen = results['LastSeen'] + (int(timezone_offset)*60*60)
 last_modified = time.localtime(last_seen)
@@ -231,8 +225,7 @@ hazard_aqi_text.y = current_aqi_text.y + current_aqi_text.bounding_box[3] - 5
 display.show(main_group)
 display.refresh()
 
-# wait for the screen to finish refreshing before going into deep sleep
+# wait for the screen to finish refreshing then deep sleep for 10 minutes
 while display.busy:
     pass
-# sleep for 10 minutes
 magtag.exit_and_deep_sleep(600)
