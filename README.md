@@ -12,7 +12,7 @@ Plug the MagTag into your computer and it will show up as a USB drive called `CI
 Follow the directions in this tutorial to install the necessary libraries from the latest bundle.
 https://learn.adafruit.com/creating-magtag-projects-with-circuitpython/magtag-specific-circuitpython-libraries
 
-If things aren't working you might also need to install a new version of CircuitPython. If the face of your MagTag is black then you can do the u2f installation and ignore the part about bin files.
+If things aren't working you might also need to install a new version of CircuitPython. If the face of your MagTag is black then its a newer version and you can do the UF2 installation and ignore the part about bin files.
 https://learn.adafruit.com/creating-magtag-projects-with-circuitpython/install-circuitpython
 
 # Secrets File
@@ -25,11 +25,11 @@ secrets = {
     'thingspeak_key': "Your Sensor's Key",
 }
 ```
-Create a file in the top level of your CIRCUITPY drive containing your WiFi credentials and information about your sensor.
+Create a file called `secrets.py` in the top level of your CIRCUITPY drive containing your WiFi credentials and information about your sensor.
 
 1. Find your sensor on the PurpleAir map https://www.purpleair.com/map
 1. Click on the marker and when you mouse over _'Get This Widget'_ another layer pops up. Click the link to the JSON file.
-1. The `ID` field is your sensor_id and if your sensor is private you'll need the `THINGSPEAK_PRIMARY_ID_READ_KEY` too.
+1. The `ID` field is your ``sensor_id`` and if your sensor is private you'll need the `THINGSPEAK_PRIMARY_ID_READ_KEY` too.
 
 ```
 'timezone_offset' : "-8",
@@ -43,26 +43,26 @@ When you registered your sensor you gave it a name and that name will be shown o
 
 # See Also
 
-MagTag product page
+MagTag product page  
 https://www.adafruit.com/product/4819
 
-Getting started with the MagTag
+Getting started with the MagTag  
 https://learn.adafruit.com/adafruit-magtag
 
-Creating Projects with the MagTag
+Creating Projects with the MagTag  
 https://learn.adafruit.com/creating-magtag-projects-with-circuitpython
 
-Deep Sleep and Battery Usage
+Deep Sleep and Battery Usage  
 https://learn.adafruit.com/deep-sleep-with-circuitpython
 
-CircuitPython Display Support Using displayio
+CircuitPython Display Support Using displayio  
 https://learn.adafruit.com/circuitpython-display-support-using-displayio
 
-Getting Started With CircuitPython
+Getting Started With CircuitPython  
 https://learn.adafruit.com/welcome-to-circuitpython
 
-Source Sans Pro font family
+Source Sans Pro font family  
 https://fonts.google.com/specimen/Source+Sans+Pro?query=source+sa
 
-Creating custom fonts for CircuitPython
+Creating custom fonts for CircuitPython  
 https://learn.adafruit.com/custom-fonts-for-pyportal-circuitpython-display
