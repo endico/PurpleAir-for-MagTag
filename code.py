@@ -187,20 +187,13 @@ valid_offsets = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
                  "-6", "-7", "-8", "-9", "-10", "-11", "-12"]
 if (timezone_offset not in valid_offsets):
     print("timezone_offset must be one of the following values", valid_offsets)
+    print("Using default offset -8 for Pacific Standard Time")
     timezone_offset = -8  # Pacific Standard Time
 last_seen = results['LastSeen'] + (int(timezone_offset)*60*60)
 last_modified = time.localtime(last_seen)
-last_modified_hour_digits = len(str(last_modified[3]))
-if last_modified_hour_digits == 1:
-    hour = "0" + str(last_modified[3])
-else:
-    hour = str(last_modified[3])
-last_modified_min_digits = len(str(last_modified[4]))
-if last_modified_min_digits == 1:
-    min = "0" + str(last_modified[4])
-else:
-    min = str(last_modified[4])
-last_modified_text.text = f'At {hour}:{min}'
+hour = str(last_modified[3])
+min = str(last_modified[4])
+last_modified_text.text = f'At {hour:02}:{min:02}'
 
 # Instead of using PM2_5Value, use the 10 minute average
 # in Stats['v1'] since this is what the purpleair map uses.
