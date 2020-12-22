@@ -191,8 +191,8 @@ if (timezone_offset not in valid_offsets):
     timezone_offset = -8  # Pacific Standard Time
 last_seen = results['LastSeen'] + (int(timezone_offset)*60*60)
 last_modified = time.localtime(last_seen)
-hour = str(last_modified[3])
-min = str(last_modified[4])
+hour = int(last_modified[3])
+min = int(last_modified[4])
 last_modified_text.text = f'At {hour:02}:{min:02}'
 
 # Instead of using PM2_5Value, use the 10 minute average
