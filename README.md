@@ -28,6 +28,7 @@ secrets = {
     'password' : 'Your WiFI Password',
     'sensor_id' : "Your PurpleAir Sensor's ID",
     'thingspeak_key': "Your Sensor's Key",
+    'timezone_offset' : "-8",
 }
 ```
 Create a file called `secrets.py` in the top level of your `CIRCUITPY` drive containing your WiFi credentials and information about your sensor.
@@ -57,6 +58,9 @@ If you have trouble getting it to update, it may be having trouble connecting to
 
 MagTag product page  
 https://www.adafruit.com/product/4819
+
+Adabox 17 Unboxing showing assembly and other projects  
+https://www.youtube.com/watch?v=_YfmqJiznDY
 
 Getting started with the MagTag  
 https://learn.adafruit.com/adafruit-magtag
