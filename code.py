@@ -165,7 +165,7 @@ magtag = MagTag()
 # What is the right voltage to start warning about the battery being low?
 # A full battery has 4 volts. It supplies 3.7V to the board so I decided
 # to start warning at 3.8v but maybe there's a better number
-if (magtag.peripherals.battery > 3.8):
+if (magtag.peripherals.battery > 3.3):
     voltage_text.text = ' '
 else:
     voltage_text.text = 'Battery Low'
