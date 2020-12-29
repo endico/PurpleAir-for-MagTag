@@ -87,4 +87,4 @@ PurpleAir PM2.5 performance across the U.S.#2
 https://cfpub.epa.gov/si/si_public_record_report.cfm?Lab=CEMM&dirEntryId=348236
 
 PurpleAir PM2.5 U.S. Correction and Performance During Smoke Events 4/2020  
-https://cfpub.epa.gov/si/si_public_record_report.cfm?Lab=CEMM&count=10000&dirEntryId=349513&searchall=&showcriteria=2&simplesearch=0&timstype=
+https://cfpub.epa.gov/si/si_public_record_report.cfm?Lab=CEMM&count=10000&dirEntryId=349513
