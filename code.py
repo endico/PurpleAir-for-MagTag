@@ -207,7 +207,7 @@ hazard_aqi_text.text = message_transform(avg_pm2_5)
 if 'sensor_alias' in secrets:
     sensor_text.text = secrets['sensor_alias'][0:sensor_max_glyphs]
 else:
-    sensor_text.text = results[1][0:sensor_max_glyphs]
+    sensor_text.text = results['Label'][0:sensor_max_glyphs]
 
 aqi_label_text.x = current_aqi_text.x + \
                     current_aqi_text.bounding_box[2] + margin
