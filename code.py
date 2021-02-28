@@ -105,6 +105,7 @@ current_aqi_text = label.Label(
     background_color=0xFFFFFF,
     anchor_point=(0.0, 0.0),
     anchored_position=(margin, margin),
+    base_alignment=True,
 )
 main_group.append(current_aqi_text)
 
@@ -113,6 +114,7 @@ aqi_label_text = label.Label(
     text="AQI",
     color=0x000000,
     background_color=0xFFFFFF,
+    base_alignment=True,
 )
 main_group.append(aqi_label_text)
 
@@ -123,6 +125,7 @@ hazard_aqi_text = label.Label(
     color=0x000000,
     background_color=0xFFFFFF,
     x=margin,
+    base_alignment=True,
 )
 main_group.append(hazard_aqi_text)
 
@@ -134,7 +137,8 @@ sensor_text = label.Label(
     color=0x000000,
     background_color=0xFFFFFF,
     anchor_point=(1.0, 1.0),
-    anchored_position=(display.width - margin, display.height - margin)
+    anchored_position=(display.width - margin, display.height - margin),
+    base_alignment=True,
 )
 main_group.append(sensor_text)
 
@@ -145,7 +149,8 @@ last_modified_text = label.Label(
     color=0x000000,
     background_color=0xFFFFFF,
     anchor_point=(0.0, 1.0),
-    anchored_position=(margin, display.height - margin)
+    anchored_position=(margin, display.height - margin),
+    base_alignment=True,
 )
 main_group.append(last_modified_text)
 
@@ -211,9 +216,10 @@ else:
 
 aqi_label_text.x = current_aqi_text.x + \
                     current_aqi_text.bounding_box[2] + margin
-aqi_label_text.y = current_aqi_text.y + current_aqi_text.bounding_box[3] - \
-                    aqi_label_text.bounding_box[3] - 13
-hazard_aqi_text.y = current_aqi_text.y + current_aqi_text.bounding_box[3] - 5
+aqi_label_text.y = current_aqi_text.y
+hazard_aqi_text.y = current_aqi_text.y + hazard_aqi_text.bounding_box[3] + margin
+last_modified_text.y = display.height - margin
+sensor_text.y = display.height - margin
 
 display.show(main_group)
 display.refresh()
