@@ -11,7 +11,7 @@ If you're not a `git` user, you can download the dashboard code by clicking on t
 
 Plug the MagTag into your computer and it will show up as a USB drive called `CIRCUITPY`. Copy the file `code.py` and the `fonts` folder to the drive. If the battery is plugged in you may need to hit the reset button first.
 
-Follow the directions in this tutorial to install the necessary libraries from the latest bundle.
+Follow the directions in this tutorial to install the necessary libraries from the latest bundle. You need a version of the library dated February 27, 2021 or later.
 https://learn.adafruit.com/creating-magtag-projects-with-circuitpython/magtag-specific-circuitpython-libraries
 
 If things aren't working you might also need to install a new version of CircuitPython. If the face of your MagTag is black then its a newer version and you can do the UF2 installation and ignore the part about bin files.
@@ -47,6 +47,11 @@ https://en.wikipedia.org/wiki/List_of_UTC_time_offsets
 'sensor_alias' : "PurpleAir",
 ```
 When you registered your sensor you gave it a name and that name will be shown on the display. You can make it say something else by adding an entry for _sensor_alias_, which can be up to 25 characters.
+
+```
+'update_frequency': '20'
+```
+This is the number of minutes between updates. When my MagTag sleeps 10 minutes between updates a battery charge me about a week. The battery lasts considerably longer when you update once an hour. Be kind to the PurpleAir site and don't update more often than every ten minutes.
 
 ## Finally
 

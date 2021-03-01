@@ -214,10 +214,11 @@ if 'sensor_alias' in secrets:
 else:
     sensor_text.text = results['Label'][0:sensor_max_glyphs]
 
-aqi_label_text.x = current_aqi_text.x + \
-                    current_aqi_text.bounding_box[2] + margin
+aqi_label_text.x = \
+    current_aqi_text.x + current_aqi_text.bounding_box[2] + margin
 aqi_label_text.y = current_aqi_text.y
-hazard_aqi_text.y = current_aqi_text.y + hazard_aqi_text.bounding_box[3] + margin
+hazard_aqi_text.y = \
+    current_aqi_text.y + hazard_aqi_text.bounding_box[3] + margin
 last_modified_text.y = display.height - margin
 sensor_text.y = display.height - margin
 
@@ -227,4 +228,12 @@ display.refresh()
 # wait for the screen to finish refreshing then deep sleep for 10 minutes
 while display.busy:
     pass
-magtag.exit_and_deep_sleep(600)
+
+# Set the frequency of updates, in minutes. Be kind to the server and
+# don't check more often that 10 minutes. At 10 minutes the battery
+# lasts about a week.
+if 'update_frequency' in secrets:
+    update_frequency = secrets['update_frequency'] * 60
+else:
+    update_frequency = 1200
+magtag.exit_and_deep_sleep(update_frequency)
