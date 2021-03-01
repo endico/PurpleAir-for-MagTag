@@ -51,13 +51,13 @@ When you registered your sensor you gave it a name and that name will be shown o
 ```
 'update_frequency': '20'
 ```
-This is the number of minutes between updates. When my MagTag sleeps 10 minutes between updates a battery charge me about a week. The battery lasts considerably longer when you update once an hour. Be kind to the PurpleAir site and don't update more often than every ten minutes.
+This is the number of minutes between updates. When my MagTag sleeps 10 minutes between updates a battery charge me about a week. The battery lasts considerably longer if you only update once per hour. Be kind to the PurpleAir site and don't update more often than every ten minutes.
 
 ## Finally
 
 As you make changes to things on your `CIRCUITPY` drive, the MagTag will restart automatically. You can force it by pressing the reset button above the USB port. After resetting, it will take several seconds for the screen to update. After that it should update every 10 minutes.
 
-If you have trouble getting it to update, it may be having trouble connecting to the network so try moving it closer to your WiFI router.
+If you have trouble getting it to update, it may be having trouble connecting to the network so try moving it closer to your WiFI router. Also, make sure that the power switch on the top left corner is in the on position to the right.
 
 ## See Also
 
