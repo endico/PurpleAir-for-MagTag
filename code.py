@@ -231,9 +231,9 @@ while display.busy:
 
 # Set the frequency of updates, in minutes. Be kind to the server and
 # don't check more often that 10 minutes. At 10 minutes the battery
-# lasts about a week.
+# lasts about a week. At once/hour, about a month.
 if 'update_frequency' in secrets:
-    update_frequency = secrets['update_frequency'] * 60
+    update_frequency = int(secrets['update_frequency']) * 60
 else:
     update_frequency = 1200
-magtag.exit_and_deep_sleep(update_frequency)
+magtag.exit_and_deep_sleep(int(update_frequency))
