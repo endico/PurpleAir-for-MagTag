@@ -15,6 +15,8 @@ from adafruit_display_text import label
 from adafruit_magtag.magtag import MagTag
 display = board.DISPLAY
 
+ONE_HOUR = 60*60
+
 #
 # PurpleAir AQI Helper functions
 #
@@ -78,9 +80,9 @@ else:
 
 if 'thingspeak_key' in secrets:
     key = secrets['thingspeak_key']
-    data_source = f'https://www.purpleair.com/json?show={sensor_id}&key={key}'
+    data_source = f'https://api.purpleair.com/v1/sensors/{sensor_id}?api_key={key}'
 else:
-    data_source = f'https://www.purpleair.com/json?show={sensor_id}'
+    data_source = f'https://api.purpleair.com/v1/sensors/{sensor_id}'
 
 big_font = bitmap_font.load_font("/fonts/SourceSansPro-Black-70.bdf")
 medium_font = bitmap_font.load_font("/fonts/SourceSansPro-Bold-20.bdf")
@@ -176,15 +178,6 @@ else:
     voltage_text.text = 'Battery Low'
 print(f'battery: {magtag.peripherals.battery} V')
 
-try:
-    magtag.network.connect()
-    response = magtag.network.requests.get(data_source)
-    value = response.json()
-    results = value['results'][0]
-except (ConnectionError, ValueError, RuntimeError) as e:
-    print("Some error occured, retrying in 10 seconds -", e)
-    magtag.exit_and_deep_sleep(10)
-
 # Default time zone is Pacific Standard
 timezone_offset = secrets['timezone_offset']
 valid_offsets = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
@@ -194,17 +187,41 @@ if (timezone_offset not in valid_offsets):
     print("timezone_offset must be one of the following values", valid_offsets)
     print("Using default offset -8 for Pacific Standard Time")
     timezone_offset = -8  # Pacific Standard Time
-last_seen = results['LastSeen'] + (int(timezone_offset)*60*60)
+
+try:
+    print('data_source', data_source)
+    magtag.network.connect()
+    response = magtag.network.requests.get(data_source)
+    value = response.json()
+    results = value['sensor']
+    time_stamp = value['time_stamp'] + (int(timezone_offset)*60*60)
+except (ConnectionError, ValueError, RuntimeError) as e:
+    print("Some error occured, retrying in 10 seconds -", e)
+    magtag.exit_and_deep_sleep(10)
+
+last_seen = results['last_seen'] + (int(timezone_offset)*ONE_HOUR)
+data_age = time_stamp - last_seen
 last_modified = time.localtime(last_seen)
 hour = int(last_modified[3])
+hour_12 = hour % 12
+if hour_12 == 0:
+    hour_12 = 12
+am_pm = "am"
+if hour / 12 >= 1:
+    am_pm = "pm"
 min = int(last_modified[4])
-last_modified_text.text = f'At {hour:02}:{min:02}'
+last_modified_text.text = f'At {hour_12}:{min:02} {am_pm}'
 
 # Instead of using PM2_5Value, use the 10 minute average
 # in Stats['v1'] since this is what the purpleair map uses.
-stats = json.loads(results['Stats'])
-avg_pm2_5 = stats['v1']
-current_aqi_text.text = aqi_transform(avg_pm2_5)
+stats = results['stats']
+avg_pm2_5 = stats['pm2.5_10minute']
+aqi_transform_text = aqi_transform(avg_pm2_5)
+if data_age > ONE_HOUR:
+    current_aqi_text.text = f'** {aqi_transform_text} **'
+else:
+    current_aqi_text.text = aqi_transform_text
+
 hazard_aqi_text.text = message_transform(avg_pm2_5)
 
 # Truncate sensor name to 25 characters. If it
@@ -212,7 +229,7 @@ hazard_aqi_text.text = message_transform(avg_pm2_5)
 if 'sensor_alias' in secrets:
     sensor_text.text = secrets['sensor_alias'][0:sensor_max_glyphs]
 else:
-    sensor_text.text = results['Label'][0:sensor_max_glyphs]
+    sensor_text.text = results['name'][0:sensor_max_glyphs]
 
 aqi_label_text.x = \
     current_aqi_text.x + current_aqi_text.bounding_box[2] + margin
